@@ -7,8 +7,8 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: $admin
-      MONGO_INITDB_ROOT_PASSWORD: $123
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: "123"
     volumes:
       - ./data:/data/db
       - ./mongo-init:/docker-entrypoint-initdb.d
@@ -23,9 +23,9 @@ services:
     depends_on:
       - mongodb-botiga
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: $admin
-      ME_CONFIG_MONGODB_ADMINPASSWORD: $123
-      ME_CONFIG_MONGODB_URL: mongodb://$admin:$123@mongodb-botiga:27017/
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "123"
+      ME_CONFIG_MONGODB_URL: mongodb://admin:123@mongodb-botiga:27017/
     restart: unless-stopped
     networks:
       - xarxa-botiga
