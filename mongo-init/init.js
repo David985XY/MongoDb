@@ -318,10 +318,10 @@ db.comandes.insertMany([
     total: 90.00
   },
   {
-    client_id: clients[9]._id,
+    client_id: clients[9]._id, //hace referencia al id del cliente 9.
     data_comanda: new Date("2024-06-05"),
     estat: "entregada",
-    adreca_entrega: { carrer: "Carrer de la Pau 1", ciutat: "Terrassa", cp: "08221" },
+    adreca_entrega: { carrer: "Carrer de la Pau 1", ciutat: "Terrassa", cp: "08221" }, //embedding
     linies: [
       { nom_producte: "Iogui de Ioga 6mm AntiRelliscant", preu_unitari: 28.00, quantitat: 1 },
       { nom_producte: "Raqueta de Pàdel ProStar", preu_unitari: 89.95, quantitat: 1 }
