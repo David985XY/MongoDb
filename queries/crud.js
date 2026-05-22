@@ -1,5 +1,5 @@
-// crud.js - Operacions CRUD sobre la col·lecció productes
-// Executa amb: mongosh "mongodb://admin:contrasenya@localhost:27017/botiga?authSource=admin" queries/crud.js
+
+// docker exec -i mongodb-botiga mongosh \"mongodb://admin:123@localhost:27017/botiga?authSource=admin" \< queries/crud.js
 
 db = db.getSiblingDB('botiga');
 

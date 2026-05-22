@@ -3,6 +3,7 @@
 BLOC 1:
 
 1.2 Preguntes teòriques
+
 Prepara la resposta d’aquestes preguntes i escriu-la al fitxer practica.md. Aquestes preguntes se’t
 podran demanar en la validació oral.
 
@@ -71,7 +72,8 @@ El bind mount es així ./data:/data/db tu tries la ruta exacta del host útil pe
 
 Embedding (dades incrustades dins el document principal):
 
-Exemple: Un blog on cada post conté els seus comentaris incrustats. Com que els comentaris quasi sempre es mostren amb el post i rarament es consulten de forma independent, té sentit tenir-los al mateix document. Estalviem consultes addicionals a la base de dades.
+Exemple: Un blog on cada post conté els seus comentaris incrustats. Com que els comentaris quasi sempre es mostren amb el post i rarament es consulten de forma independent, 
+té sentit tenir-los al mateix document. Estalviem consultes addicionals a la base de dades.
 
 json{
   "titol": "Com aprendre MongoDB",
@@ -93,9 +95,11 @@ json{
 }
 
 4. Explica quina estratègia o estratègies has fet servir en la col·lecció comandes i per quin motiu.
+
 He usat una estratègia mixta:
 
 Referència per al client (client_id): el client té vida pròpia (dades personals, historial, etc.) i no té sentit duplicar tota la informació del client a cada comanda. Si el client canvia d'adreça o telèfon, no cal actualitzar totes les seves comandes.
+
 Embedding per a les línies de comanda (linies): el preu dels productes pot canviar amb el temps. Si referències el producte per _id, en consultar una comanda antiga veuríem el preu actual i no el que va pagar el client. Incrustant la línia amb nom_producte i preu_unitari guardem un snapshot del moment de la compra, que és el comportament correcte en una botiga real.
 
 
@@ -121,4 +125,11 @@ jsdb.clients.find(
 Útil per reduir la quantitat de dades transferides quan no necessitem tots els camps.
 
 3. Funcions i operadors utilitzats al CRUD
-Funció / OperadorSignificatExemple diferent de l'enunciatinsertOne(doc)Insereix un sol documentdb.clients.insertOne({ nom: "Pau", email: "pau@email.com" })insertMany([])Insereix múltiples documents d'un copdb.clients.insertMany([{nom:"A"}, {nom:"B"}])find(filtre, proj)Cerca documents que compleixen el filtredb.clients.find({ actiu: false }, { nom: 1 })$ltLess than – menor quedb.comandes.find({ total: { $lt: 50 } })$gtGreater than – major quedb.comandes.find({ total: { $gt: 100 } })$gteGreater or equal – major o igualdb.clients.find({ data_registre: { $gte: new Date("2024-01-01") } })updateOne(f, upd)Actualitza el primer document que compleix el filtredb.clients.updateOne({ email: "pau@email.com" }, { $set: { actiu: false } })updateMany(f, upd)Actualitza tots els documents que compleixen el filtredb.clients.updateMany({ actiu: false }, { $set: { eliminat: true } })$setEstableix el valor d'un campdb.comandes.updateOne({ _id: id }, { $set: { estat: "entregada" } })$incIncrementa un camp numèricdb.productes.updateOne({ nom: "Raqueta" }, { $inc: { estoc: -1 } })$pushAfegeix un element a un arraydb.clients.updateOne({ nom: "Maria" }, { $push: { historial: "login" } })deleteOne(f)Elimina el primer document que compleix el filtredb.clients.deleteOne({ email: "spam@email.com" })deleteMany(f)Elimina tots els documents que compleixen el filtre
+Exemple diferent de l'enunciatinsertOne(doc)
+1-Insereix un sol documentdb.clients.insertOne({ nom: "Pau", email: "pau@email.com" })
+
+insertMany([])Insereix múltiples documents d'un cop db.clients.insertMany([{nom:"A"}, {nom:"B"}])find(filtre, proj)Cerca documents que compleixen el filtredb.clients.find({ actiu: false }, { nom: 1 })$ltLess than – menor quedb.comandes.find({ total: { $lt: 50 } })$gtGreater than – major quedb.comandes.find({ total: { $gt: 100 } })$gteGreater or equal – major o igualdb.clients.find({ data_registre: { $gte: new Date("2024-01-01") } })updateOne(f, upd)Actualitza el primer document que compleix el filtredb.clients.updateOne({ email: "pau@email.com" }, { $set: { actiu: false } })updateMany(f, upd)Actualitza tots els documents que compleixen el filtredb.clients.updateMany({ actiu: false }, { $set: { eliminat: true } })$setEstableix el valor d'un campdb.comandes.updateOne({ _id: id }, { $set: { estat: "entregada" } })$incIncrementa un camp numèricdb.productes.updateOne({ nom: "Raqueta" }, { $inc: { estoc: -1 } })$pushAfegeix un element a un arraydb.clients.updateOne({ nom: "Maria" }, { $push: { historial: "login" } })deleteOne(f)Elimina el primer document que compleix el filtredb.clients.deleteOne({ email: "spam@email.com" })deleteMany(f)Elimina tots els documents que compleixen el filtre
+
+
+Bloc 4
+
