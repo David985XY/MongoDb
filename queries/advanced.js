@@ -1,5 +1,8 @@
 // advanced.js - Consultes avançades i gestió d'índexs
-// docker exec -i mongodb-botiga mongosh \"mongodb://admin:123@localhost:27017/botiga?authSource=admin" \< queries/advanced.js
+
+//docker exec -i mongodb-botiga mongosh \
+//  "mongodb://admin:123@localhost:27017/botiga?authSource=admin" \
+//  < queries/advanced.js
 
 db = db.getSiblingDB('botiga');
 

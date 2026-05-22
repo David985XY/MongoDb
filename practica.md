@@ -125,11 +125,64 @@ jsdb.clients.find(
 Útil per reduir la quantitat de dades transferides quan no necessitem tots els camps.
 
 3. Funcions i operadors utilitzats al CRUD
-Exemple diferent de l'enunciatinsertOne(doc)
-1-Insereix un sol documentdb.clients.insertOne({ nom: "Pau", email: "pau@email.com" })
 
-insertMany([])Insereix múltiples documents d'un cop db.clients.insertMany([{nom:"A"}, {nom:"B"}])find(filtre, proj)Cerca documents que compleixen el filtredb.clients.find({ actiu: false }, { nom: 1 })$ltLess than – menor quedb.comandes.find({ total: { $lt: 50 } })$gtGreater than – major quedb.comandes.find({ total: { $gt: 100 } })$gteGreater or equal – major o igualdb.clients.find({ data_registre: { $gte: new Date("2024-01-01") } })updateOne(f, upd)Actualitza el primer document que compleix el filtredb.clients.updateOne({ email: "pau@email.com" }, { $set: { actiu: false } })updateMany(f, upd)Actualitza tots els documents que compleixen el filtredb.clients.updateMany({ actiu: false }, { $set: { eliminat: true } })$setEstableix el valor d'un campdb.comandes.updateOne({ _id: id }, { $set: { estat: "entregada" } })$incIncrementa un camp numèricdb.productes.updateOne({ nom: "Raqueta" }, { $inc: { estoc: -1 } })$pushAfegeix un element a un arraydb.clients.updateOne({ nom: "Maria" }, { $push: { historial: "login" } })deleteOne(f)Elimina el primer document que compleix el filtredb.clients.deleteOne({ email: "spam@email.com" })deleteMany(f)Elimina tots els documents que compleixen el filtre
+Exemple diferent de l'enunciatinsertOne(doc)
+
+insertOne(doc)Insereix un sol document 
+db.clients.insertOne({ nom: "Pau", email: "pau@email.com" })
+
+insertMany([])Insereix múltiples documents d'un cop db.clients.insertMany([{nom:"A"}, {nom:"B"}])
+
+find(filtre, proj) Cerca documents que compleixen el filtre
+db.clients.find({ actiu: false }, { nom: 1 })
+
+$lt Less than – menor que 
+db.comandes.find({ total: { $lt: 50 } })
+
+$gt Greater than – major que
+db.comandes.find({ total: { $gt: 100 } })
+
+$gte Greater or equal – major o igua
+ldb.clients.find({ data_registre: { $gte: new Date("2024-01-01") } })
+
+updateOne(f, upd)Actualitza el primer document que compleix el filtre
+db.clients.updateOne({ email: "pau@email.com" }, { $set: { actiu: false } })
+
+updateMany(f, upd) Actualitza tots els documents que compleixen el filtre
+db.clients.updateMany({ actiu: false }, { $set: { eliminat: true } })
+
+$set Estableix el valor d'un camp
+db.comandes.updateOne({ _id: id }, { $set: { estat: "entregada" } })
+
+$inc Incrementa un camp numèric
+db.productes.updateOne({ nom: "Raqueta" }, { $inc: { estoc: -1 } })
+
+$push Afegeix un element a un array
+db.clients.updateOne({ nom: "Maria" }, { $push: { historial: "login" } })
+
+deleteOne(f)Elimina el primer document que compleix el filtre
+db.clients.deleteOne({ email: "spam@email.com" })
+
+
+deleteMany(f)Elimina tots els documents que compleixen el filtre
+db.comandes.deleteMany({ estat: "cancel·lada" }) 
 
 
 Bloc 4
+
+1. Quan pot ser perjudicial tenir massa índexs en una col·lecció? Explica el compromís
+(trade-off) entre lectura i escriptura.
+
+Tenir molts índexs afecta negativament el rendiment de les operacions d'escriptura (insert, update, delete). Cada vegada que modifiquem un document, MongoDB ha d'actualitzar tots els índexs que afecten els camps modificats. Amb 10 índexs, una inserció pot trigar 10 vegades més que sense cap índex.
+Trade-off lectura vs escriptura:
+
+Pocs índexs → lectures lentes (full collection scan), escriptures ràpides.
+Molts índexs → lectures ràpides, escriptures lentes + més espai en disc.
+
+
+2. Llista totes les funcions i operadors que hagis utilitzat en les consultes, explica el seu
+significat i descriu un exemple d’ús diferent dels exemples d’aquest enunciat.
+
+
+
 
