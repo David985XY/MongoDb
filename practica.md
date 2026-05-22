@@ -105,6 +105,22 @@ Embedding per a les línies de comanda (linies): el preu dels productes pot canv
 
 Bloc 3
 
+Resultados Create:
+
+![Create](image-2.png)
+
+Resultados Read:
+
+![Read](image-3.png)
+
+Resultados Update:
+
+![Update](image-4.png)
+
+Resultados Delete:
+
+![Delete](image-5.png)
+
 1. El nom del producte és únic?
 No, tal com hem creat la col·lecció, el camp nom no és únic. MongoDB crea un índex únic automàticament sobre _id, però no sobre cap altre camp a menys que l'especifiquem explícitament. Podríem inserir dos productes amb el mateix nom sense cap error.
 Per garantir la unicitat caldria crear un índex únic:
@@ -184,5 +200,77 @@ Molts índexs → lectures ràpides, escriptures lentes + més espai en disc.
 significat i descriu un exemple d’ús diferent dels exemples d’aquest enunciat.
 
 
+$and: []
+Totes les condicions han de ser certes
+db.clients.find({ $and: [{ actiu: true }, { data_registre: { $gte: new Date("2024-01-01") } }] })
 
 
+$or: []
+Almenys una condició ha de ser certa
+db.comandes.find({ $or: [{ estat: "pendent" }, { estat: "en_proces" }] })
+
+
+$regex
+Cerca per expressió regular
+db.clients.find({ email: { $regex: /@gmail\.com$/i } })
+
+
+sort({ camp: -1 })
+Ordena descendent (-1) o ascendent (1)
+db.clients.find().sort({ data_registre: -1 })
+
+
+limit(n)
+Limita el nombre de resultats
+db.productes.find().sort({ valoracio: -1 }).limit(3)
+
+
+aggregate([])
+Pipeline d'agregació per transformar dades
+db.comandes.aggregate([{ $match: { estat: "entregada" } }, { $count: "total" }])
+
+
+$group
+Agrupa documents per un camp i aplica acumuladors
+db.comandes.aggregate([{ $group: { _id: "$estat", total: { $sum: 1 } } }])
+
+
+$sum
+Suma valors dins d'un grup
+db.comandes.aggregate([{ $group: { _id: null, ingressos: { $sum: "$total" } } }])
+
+
+$avg
+Mitjana de valors dins d'un grup
+db.productes.aggregate([{ $group: { _id: null, valoracio_mitja: { $avg: "$valoracio" } } }])
+
+
+
+$lookup
+Fa un "join" amb una altra col·lecció
+db.comandes.aggregate([{ $lookup: { from: "clients", localField: "client_id", foreignField: "_id", as: "client" } }])
+
+
+$project
+Selecciona/transforma camps en el pipeline
+db.clients.aggregate([{ $project: { nom_complet: { $concat: ["$nom", " ", "$cognoms"] } } }])
+
+
+$arrayElemAt
+Obté un element d'un array per posició
+{ $arrayElemAt: ["$info_client.nom", 0] } – primer element del resultat del $lookup
+
+
+createIndex()
+Crea un índex en un camp o conjunt de camps
+db.clients.createIndex({ email: 1 }, { unique: true })
+
+
+getIndexes()
+Llista tots els índexs d'una col·lecció
+db.clients.getIndexes()
+
+
+explain('executionStats')
+Mostra estadístiques d'execució d'una consulta
+db.productes.find({ preu: { $gt: 50 } }).explain('executionStats')
